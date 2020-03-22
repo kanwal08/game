@@ -3,5 +3,7 @@ Rails.application.routes.draw do
   root to: 'images#new'
 
   resources :images, only: [:new, :create]
-  resource :play, only: [:new, :create]
+  resource :play, only: [:create]
+  get "/play", to: "plays#index", as: "play_index"
+
 end

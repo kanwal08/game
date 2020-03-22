@@ -9,7 +9,7 @@ class ImagesController < ApplicationController
     image_params[:image].each do |img |
       Image.create(image: img)
     end
-    redirect_to new_play_path
+    redirect_to play_index_path
   end
 
   private

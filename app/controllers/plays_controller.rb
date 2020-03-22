@@ -1,8 +1,13 @@
 class PlaysController < ApplicationController
 
+  def index
+  	@images = Image.order('RANDOM()').limit(10)
+  	@plays = Play.order(id: :desc).all
+  end
+
   def create
-    play = Play.create!(play_params)
-    redirect_to play
+    play = Play.new(play_params)
+    render json: {result: play.save}.to_json
   end
 
   private
