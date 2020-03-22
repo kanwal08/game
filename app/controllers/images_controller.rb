@@ -7,7 +7,11 @@ class ImagesController < ApplicationController
   
   def create
     image_params[:image].each do |img |
-      Image.create(image: img)
+      @image = Image.new(image: img)
+      unless @image.save
+      	render :new
+      	return
+      end
     end
     redirect_to play_index_path
   end

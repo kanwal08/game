@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
     body {
         width: 100%;
         margin: 0 auto;
@@ -11,12 +11,21 @@
     #preview-images img {
         max-width:300px;
     }
-</style>
+</style> -->
 <div id="wrapper">
 	<%= form_for(:images, url: images_path) do |form| %>
-		<div class="field">
+            <ul id="alert">
+                <% if @image.errors.any? %>
+                    <% for message_error in @image.errors.full_messages %>
+                        <li>
+                            <%= message_error %>
+                        </li>
+                    <% end %>
+                <% end %>
+            </ul>
+        <div class="field">
 			<%= form.label :image, "Select Images", style: "font-size: 18px", for:"files" %><br>
-			<%= form.file_field :image, multiple: true, id: "files" %>
+			<%= form.file_field :image, multiple: true, required: 'required', id: "files", accept: "image/*" %>
 		</div> 
 		<div id="preview-images"></div>
 
@@ -52,5 +61,8 @@
                 false
             );
         }
+        setTimeout(function() {
+            document.getElementById("alert").style.display='none';
+        }, 3000); // <-- time in milliseconds
     </script>
 </div>
