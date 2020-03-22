@@ -1,0 +1,47 @@
+<div id="wrapper">
+    <%= form_for :play, html:{name:"play"} do |f|%>
+        <h1 id="timer-display">10</h1>
+        <%= f.hidden_field :timer, id: "timer" %>
+        <div id="image-wrapper">
+        	<%= f.hidden_field :image_id, id: "image-id" %>
+            <img id="image">
+        </div>
+        <div>
+            <%= f.submit "Play", id: "submit"%>
+        </div>
+    <%end%>
+    <br>
+    <hr>
+    <br>
+    <script>
+    	const images = [
+    	<% @images.each do |img| %>
+    	{
+    		id: <%= img.id %>,
+    		src: "<%= url_for(img.image) if img.image.attached? %>"
+    	},
+    	<% end %>
+    	];
+    </script>
+    <table>
+        <thead>
+        <tr>
+            <th>Timer</th>
+            <th>Image</th>
+        </tr>
+        </thead>
+        <tbody id="played">
+	        <% @plays.each do |play|%>
+	        	<tr>
+		            <td><%= play.timer %></td>
+		            <td>
+		               
+		                <img src=<%= url_for(play.image.image) %>>
+		            </td>
+	        	</tr>
+	        <% end%>
+        </tbody>
+    </table>
+</div>
+
+<%= javascript_pack_tag 'game' %>
