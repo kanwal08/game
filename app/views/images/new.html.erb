@@ -1,0 +1,56 @@
+<style>
+    body {
+        width: 100%;
+        margin: 0 auto;
+        padding: 50px;
+    }
+    #wrapper {
+        margin: 0 auto;
+        width: 800px;
+    }
+    #preview-images img {
+        max-width:300px;
+    }
+</style>
+<div id="wrapper">
+	<%= form_for(:images, url: images_path) do |form| %>
+		<div class="field">
+			<%= form.label :image, "Select Images", style: "font-size: 18px", for:"files" %><br>
+			<%= form.file_field :image, multiple: true, id: "files" %>
+		</div> 
+		<div id="preview-images"></div>
+
+        <br><br>
+		<div class="actions">
+			<%= form.submit %>
+		</div>
+	<% end %>
+
+    <script>
+        document.getElementById("files").addEventListener("change", previewImages);
+        const images = document.getElementById('preview-images');
+        function previewImages (event) {
+            for(let i = images.children.length - 1; i >=0; i--) {
+                images.removeChild(images.children[i]);
+            }
+
+            const files = event.target.files;
+            for (let i = 0; i < files.length; i++) {
+                previewImage(files[i]);
+            }
+        }
+        function previewImage(file) {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.addEventListener(
+                "load",
+                function() {
+                    const img = document.createElement("img");
+                    img.src = reader.result;
+                    images.appendChild(img);
+                },
+                false
+            );
+        }
+    </script>
+</div>
